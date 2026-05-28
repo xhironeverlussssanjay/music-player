@@ -1,0 +1,28 @@
+# Environment variables - JANGAN UPLOAD KE GIT!
+rest api bot/.env
+.env
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local data files
+*.json
+!package-lock.json

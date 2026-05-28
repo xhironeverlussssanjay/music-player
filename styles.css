@@ -1,0 +1,595 @@
+QMainWindow, QWidget#centralwidget {
+    background-color: #0A0A0F;
+}
+
+QWidget#sidebar {
+    background-color: #0F0F15;
+    border-right: 1px solid #1A1A28;
+}
+
+QLabel#appTitle {
+    color: #A78BFA;
+    font-size: 19px;
+    font-weight: bold;
+    font-family: "Segoe UI";
+    padding: 0px 8px;
+}
+
+QLabel#appSubtitle {
+    color: #3D3D5C;
+    font-size: 9px;
+    font-family: "Segoe UI";
+    padding: 0px 8px;
+}
+
+QPushButton#btnHome, QPushButton#btnSearch,
+QPushButton#btnLibrary, QPushButton#btnFavorites, QPushButton#btnAIChat,
+QPushButton#btnAIChatV2, QPushButton#btnPlaylist, QPushButton#btnRecent, QPushButton#btnQuiz,
+QPushButton#btnStats, QPushButton#btnAbout {
+    background-color: transparent;
+    color: #6B7280;
+    font-size: 13px;
+    font-family: "Segoe UI";
+    text-align: left;
+    padding: 11px 16px 11px 18px;
+    border: none;
+    border-radius: 12px;
+    border-left: 3px solid transparent;
+}
+
+QPushButton#btnHome:hover, QPushButton#btnSearch:hover,
+QPushButton#btnLibrary:hover, QPushButton#btnFavorites:hover, QPushButton#btnAIChat:hover,
+QPushButton#btnAIChatV2:hover, QPushButton#btnPlaylist:hover, QPushButton#btnRecent:hover, QPushButton#btnQuiz:hover,
+QPushButton#btnStats:hover, QPushButton#btnAbout:hover {
+    background-color: #1F1C30;
+    color: #C4B5FD;
+    border-left: 3px solid #A78BFA;
+}
+
+QPushButton#btnAddSong {
+    background-color: #A78BFA;
+    color: #0A0A0F;
+    border: none;
+    border-radius: 14px;
+    padding: 11px 16px;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: "Segoe UI";
+    text-align: center;
+}
+
+QPushButton#btnAddSong:hover {
+    background-color: #C4B5FD;
+}
+
+QPushButton#btnAddSong:pressed {
+    background-color: #8B5CF6;
+    color: white;
+}
+
+QLabel#lblPlaylist {
+    color: #3D3D5C;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    padding: 0px 16px;
+}
+
+QListWidget#songList {
+    background-color: transparent;
+    border: none;
+    color: #E2E8F0;
+    font-size: 12px;
+    outline: none;
+}
+
+QListWidget#songList::item {
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin: 2px 4px;
+    color: #9CA3AF;
+}
+
+QListWidget#songList::item:hover {
+    background-color: #191726;
+    color: #E2E8F0;
+}
+
+QListWidget#songList::item:selected {
+    background-color: #242036;
+    color: #A78BFA;
+    font-weight: 600;
+    border-left: 2px solid #A78BFA;
+}
+
+QScrollBar:vertical {
+    background-color: transparent;
+    width: 3px;
+    margin: 0;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #2D2D44;
+    border-radius: 2px;
+    min-height: 20px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0;
+}
+
+QStackedWidget {
+    background-color: transparent;
+}
+
+QWidget#pageHome, QWidget#pageSearch, QWidget#pageLibrary, QWidget#pageFavorites, QWidget#pageAIChat {
+    background-color: #0A0A0F;
+}
+
+QWidget#nowPlayingCard {
+    background-color: #141420;
+    border-radius: 20px;
+    border: 1px solid #1C1A2B;
+}
+
+QPushButton#albumArtBtn {
+    background-color: #2D2A3A;
+    border-radius: 16px;
+    color: #A78BFA;
+    font-size: 52px;
+    border: none;
+}
+
+QPushButton#albumArtBtn:hover {
+    background-color: #2D2A3A;
+}
+
+QPushButton#albumArtBtn:disabled {
+    background-color: #2D2A3A;
+    border-radius: 16px;
+}
+
+QLabel#songTitle {
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+QLabel#artistName {
+    color: #A78BFA;
+    font-size: 13px;
+}
+
+QLabel#albumName {
+    color: #6B7280;
+    font-size: 11px;
+}
+
+QPushButton#btnShuffle, QPushButton#btnRepeat {
+    background-color: transparent;
+    color: #6B7280;
+    font-size: 17px;
+    border: none;
+    border-radius: 20px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+QPushButton#btnShuffle:hover, QPushButton#btnRepeat:hover {
+    color: #A78BFA;
+    background-color: #1F1C30;
+}
+
+QPushButton#btnPrev, QPushButton#btnNext {
+    background-color: #242036;
+    color: #A78BFA;
+    font-size: 20px;
+    border: none;
+    border-radius: 25px;
+    min-width: 50px;
+    min-height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    text-align: center;
+    padding: 0px;
+}
+
+QPushButton#btnPrev:hover, QPushButton#btnNext:hover {
+    color: #C4B5FD;
+    background-color: #342C4E;
+}
+
+QPushButton#btnPlay {
+    background-color: #A78BFA;
+    color: #0A0A0F;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 28px;
+    min-width: 56px;
+    max-width: 56px;
+    min-height: 56px;
+    max-height: 56px;
+    text-align: center;
+    padding: 0px;
+    /*
+    qproperty-iconSize: 24px 24px;
+    */
+}
+
+QPushButton#btnPlay:hover {
+    background-color: #C4B5FD;
+}
+
+QPushButton#btnPlay:pressed {
+    background-color: #8B5CF6;
+}
+
+QPushButton#btnLike {
+    background-color: transparent;
+    color: #6B7280;
+    font-size: 20px;
+    border: none;
+    border-radius: 22px;
+    min-width: 44px;
+    min-height: 44px;
+    max-width: 44px;
+    max-height: 44px;
+}
+
+QPushButton#btnLike:hover {
+    color: #F472B6;
+    background-color: #291927;
+}
+
+QSlider#progressSlider::groove:horizontal {
+    height: 4px;
+    background-color: #2D2D44;
+    border-radius: 2px;
+}
+
+QSlider#progressSlider::handle:horizontal {
+    background-color: #FFFFFF;
+    width: 14px;
+    height: 14px;
+    margin: -5px 0;
+    border-radius: 7px;
+}
+
+QSlider#progressSlider::sub-page:horizontal {
+    background-color: #A78BFA;
+    border-radius: 2px;
+}
+
+QSlider#volumeSlider::groove:horizontal {
+    height: 3px;
+    background-color: #2D2D44;
+    border-radius: 2px;
+}
+
+QSlider#volumeSlider::handle:horizontal {
+    background-color: #FFFFFF;
+    width: 12px;
+    height: 12px;
+    margin: -5px 0;
+    border-radius: 6px;
+}
+
+QSlider#volumeSlider::sub-page:horizontal {
+    background-color: #A78BFA;
+    border-radius: 2px;
+}
+
+QLabel#timeElapsed, QLabel#timeDuration {
+    color: #6B7280;
+    font-size: 11px;
+}
+
+QLabel#lblVolIcon {
+    color: #6B7280;
+    font-size: 15px;
+}
+
+QWidget#queueArea {
+    background-color: #141420;
+    border-radius: 16px;
+    border: 1px solid #191726;
+}
+
+QLabel#lblQueue {
+    color: #E2E8F0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+QLabel#lblQueueSub {
+    color: #6B7280;
+    font-size: 10px;
+}
+
+QListWidget#queueList {
+    background-color: transparent;
+    border: none;
+    color: #9CA3AF;
+    font-size: 12px;
+    outline: none;
+}
+
+QListWidget#queueList::item {
+    padding: 9px 12px;
+    border-radius: 12px;
+    margin: 3px 4px;
+    background-color: #1A1528;
+    border: 1px solid #2A2040;
+    color: #CBD5E1;
+}
+
+QListWidget#queueList::item:hover {
+    background-color: #211A3A;
+    color: #E2E8F0;
+    border: 1px solid #6D4BC2;
+}
+
+QListWidget#queueList::item:selected {
+    background-color: #2A1A4A;
+    color: #A78BFA;
+    border: 1px solid #A78BFA;
+    font-weight: 600;
+}
+
+QPushButton#btnClearQueue {
+    background-color: transparent;
+    color: #6B7280;
+    border-radius: 3px solid #2D2D44;
+    border-radius: 18px;
+    font-size: 11px;
+    padding: 6px 14px;
+}
+
+QPushButton#btnClearQueue:hover {
+    color: #F87171;
+    border-radius: 1px solid #F87171;
+    border-radius: 19px;
+    background-color: #20151B;
+}
+
+QLabel#lblSearchTitle, QLabel#lblLibraryTitle, QLabel#lblFavTitle {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+QLineEdit#searchInput {
+    background-color: #141420;
+    color: #E2E8F0;
+    border: 1px solid #2D2D44;
+    border-radius: 14px;
+    padding: 12px 20px;
+    font-size: 14px;
+}
+
+QLineEdit#searchInput:focus {
+    border: 1px solid #A78BFA;
+    background-color: #1A1528;
+}
+
+QListWidget#searchResultList, QListWidget#libraryList, QListWidget#favList {
+    background-color: transparent;
+    border: none;
+    color: #E2E8F0;
+    font-size: 13px;
+    outline: none;
+}
+
+QListWidget#searchResultList::item, QListWidget#libraryList::item, QListWidget#favList::item {
+    padding: 11px 14px;
+    border-radius: 10px;
+    margin: 2px 0px;
+    color: #CBD5E1;
+}
+
+QListWidget#searchResultList::item:hover, QListWidget#libraryList::item:hover, QListWidget#favList::item:hover {
+    background-color: #1A1A28;
+    color: #E2E8F0;
+}
+
+QListWidget#searchResultList::item:selected, QListWidget#libraryList::item:selected {
+    background-color: #1A1528;
+    color: #A78BFA;
+}
+
+QListWidget#favList::item:selected {
+    background-color: #2A1A2A;
+    color: #F472B6;
+}
+
+QPushButton#btnImportLib {
+    background-color: transparent;
+    color: #A78BFA;
+    border: 1.5px solid #A78BFA;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 24px;
+}
+
+QPushButton#btnImportLib:hover {
+    background-color: #242036;
+    border-color: #C4B5FD;
+    color: #C4B5FD;
+}
+
+QLabel#lblLibrarySub, QLabel#lblFavSub, QLabel#lblSearchHint, QLabel#lblFavEmpty {
+    color: #6B7280;
+    font-size: 13px;
+}
+
+QStatusBar {
+    background-color: #0F0F15;
+    color: #6B7280;
+    font-size: 11px;
+    border-top: 1px solid #1A1A28;
+}
+
+/* ========== ABOUT PAGE ========== */
+
+QWidget#pageAbout {
+    background-color: #0A0A0F;
+}
+
+QLabel#lblAboutTitle {
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+QWidget#devCard {
+    background-color: #1A1528;
+    border-radius: 20px;
+    border: 1px solid #2D2D44;
+}
+
+QLabel#devPhoto {
+    background-color: transparent;
+    border: none;
+}
+
+QLabel#devName {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+QLabel#devRole {
+    color: #A78BFA;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+QLabel#devBio {
+    color: #CBD5E1;
+    font-size: 13px;
+}
+
+QLabel#devEmail, QLabel#devGithub {
+    color: #9CA3AF;
+    font-size: 12px;
+}
+
+QWidget#versionCard, QWidget#techCard, QWidget#licenseCard {
+    background-color: #141420;
+    border-radius: 16px;
+    border: 1px solid #2D2D44;
+    min-height: 120px;
+}
+
+QLabel#lblVersionIcon, QLabel#lblTechIcon, QLabel#lblLicenseIcon {
+    font-size: 32px;
+}
+
+QLabel#lblVersionTitle, QLabel#lblTechTitle, QLabel#lblLicenseTitle {
+    color: #9CA3AF;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+QLabel#lblVersionValue, QLabel#lblTechValue, QLabel#lblLicenseValue {
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* ========== NEW FEATURE PAGES ========== */
+
+QWidget#pagePlaylist, QWidget#pageRecent,
+QWidget#pageQuiz, QWidget#pageStats {
+    background-color: #0A0A0F;
+}
+
+/* Focus outline kill-switch */
+QPushButton:focus {
+    outline: none;
+    border: none;
+}
+
+QPushButton {
+    text-align: left;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 13.5px;
+}
+
+QPushButton:hover {
+    background-color: #1A1A28;
+    color: #C4B5FD;
+}
+
+/* AI Chat V2 page background */
+QWidget#pageAIChatV2 {
+    background-color: #0A0A0F;
+}
+
+/* ==========================================================
+   AI CHAT BLACK-HOLE / ALISA STYLE COMPANION PATCH
+   Core AI chat visuals live inside ai_chatbot.py via scoped QSS.
+   This patch only keeps the host page dark so no old page color leaks through.
+   ========================================================== */
+QWidget#pageAIChatV2, QWidget#pageAIChat {
+    background-color: #090914;
+}
+
+
+/* ===== AI Chat V1 Purple Pro Patch =====
+   Header and chat internals are mostly scoped inside ai_chatbot_v1_purple_pro_blackhole.py.
+   This outer patch keeps the host page aligned with the transparent purple black-hole skin. */
+QWidget#pageAIChat {
+    background-color: #070812;
+}
+QWidget#chatRootWidget {
+    background-color: transparent;
+}
+QWidget#chatHeader {
+    background-color: transparent;
+    border: none;
+}
+QPushButton#btnAIChat {
+    color: #C4B5FD;
+}
+
+
+/* ===== V1 Elegant Blackhole + V2 Bubble Host Polish ===== */
+QWidget#pageAIChat {
+    background-color: transparent;
+}
+QWidget#chatRootWidget {
+    background-color: transparent;
+}
+QPushButton#btnAIChat:hover {
+    background-color: #1F1C30;
+    color: #DDD6FE;
+    border-left: 3px solid #A78BFA;
+}
+
+
+/* ===== FINAL REALISTIC BLACK-HOLE HOST PATCH =====
+   Root visual black-hole tetap digambar QPainter di ai_chatbot_blackhole_realistic.py.
+   CSS ini hanya memastikan host page tidak bocor warna lama saat root transparan. */
+QWidget#pageAIChat, QWidget#pageAIChatV2 {
+    background-color: #05060D;
+}
+QWidget#chatRootWidget, QWidget#chatHeader,
+QScrollArea#chatScrollArea, QWidget#chatScrollAreaWidget {
+    background-color: transparent;
+    border: none;
+}
+QWidget#chatInputBar {
+    background-color: rgba(5, 6, 13, 232);
+    border-top: 1px solid rgba(210, 199, 255, 42);
+}
+QFrame#modernInputPill {
+    background-color: rgba(11, 12, 22, 244);
+    border: 1.5px solid rgba(214, 206, 255, 54);
+}
