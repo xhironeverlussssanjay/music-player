@@ -314,7 +314,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 UI/UX Engineer · Music Enthusiast
 
 - 📧 Email: redsilence@gmail.com
-- 🔗 Telegram: [@bravo6core](https://t.me/bravo6core)
+- 🔗 Telegram First: [@bravo6core](https://t.me/bravo6core)
+- 🔗 Telegram Second: [@bravo6core](https://t.me/redsilencesfx)
 
 ---
 
