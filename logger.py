@@ -86,8 +86,8 @@ def boot():
     """Modern startup banner dengan gradient effect."""
     _divider()
     print(f"\n  {BG_PURPLE}{BWHITE}{BOLD}   ♪  SoundWave Music Player v4.0   {RESET}")
-    print(f"  {BMAGENTA}║{RESET}  {BCYAN}🎵 Modern Music Experience{RESET} {BMAGENTA}║{RESET}")
-    print(f"  {BMAGENTA}║{RESET}  {DIM}Powered : Redsilence{RESET} {BMAGENTA}║{RESET}\n")
+    print(f"  {BMAGENTA}<{RESET}  {BCYAN}🎵 Modern Music Experience{RESET} {BMAGENTA}>{RESET}")
+    print(f"  {BMAGENTA}<{RESET}  {DIM}Powered : Redsilence{RESET} {BMAGENTA}>{RESET}\n")
     _log("INFO", f"{BCYAN}Aplikasi dimulai — {datetime.now().strftime('%A, %d %b %Y %H:%M')}{RESET}")
     _divider()
 
@@ -197,7 +197,7 @@ def info(message: str):
 def app_exit():
     _divider()
     print(f"{BYELLOW}👋 Thanks for using SoundWave!{RESET}")
-    print(f"{BG_BLUE}See you next time...{RESET}")
+    print(f"{CYAN}{BOLD}See you next time...{RESET}")
     print()
 
 

@@ -3,7 +3,11 @@ import random
 import time
 
 import pygame
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QListWidgetItem, QWidget, QHBoxLayout, QGraphicsOpacityEffect
+from PyQt5.QtWidgets import (
+    QMainWindow, QFileDialog, QListWidgetItem, QWidget, QHBoxLayout,
+    QVBoxLayout, QBoxLayout, QFrame, QSizePolicy, QMenu, QPushButton,
+    QGraphicsOpacityEffect,
+)
 from PyQt5.QtCore import QTimer, Qt, QPropertyAnimation, QRect, QEasingCurve, QSize
 from PyQt5.QtGui import QPixmap, QColor, QKeySequence, QIcon, QPainter, QPainterPath
 from PyQt5.uic import loadUi
@@ -87,6 +91,7 @@ class MusicPlayer(QMainWindow):
         # ── Setup ──────────────────────────────────────────────────────────────
         self._connect_signals()
         self._setup_nav_icons()
+        self._setup_top_navigation()
         self._setup_default_album_art()
         self._setup_like_icon()  # Setup icon love default
         self._setup_about_page()
@@ -163,6 +168,262 @@ class MusicPlayer(QMainWindow):
                 btn.setIcon(icon)
                 btn.setIconSize(QSize(18, 18))
         logger.info("Nav icons loaded from SVG files")
+
+    def _setup_top_navigation(self):
+        """Ubah layout bawaan sidebar kiri menjadi top navigation modern dengan mode menu ringkas."""
+        root = self.centralwidget.layout()
+        if root is None:
+            logger.warn("Top navigation gagal: centralwidget tidak punya layout")
+            return
+
+        # Layout utama dari .ui awalnya QHBoxLayout. Kita ubah arahnya menjadi vertikal:
+        # top navigation di atas, konten QStackedWidget tetap di bawah.
+        if isinstance(root, QBoxLayout):
+            root.setDirection(QBoxLayout.TopToBottom)
+            root.setSpacing(0)
+            root.setContentsMargins(0, 0, 0, 0)
+
+        self.topNavBar = QFrame(self.centralwidget)
+        self.topNavBar.setObjectName("topNavBar")
+        self.topNavBar.setMinimumHeight(56)
+        self.topNavBar.setMaximumHeight(62)
+        self.topNavBar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        top_layout = QHBoxLayout(self.topNavBar)
+        top_layout.setContentsMargins(12, 7, 12, 7)
+        top_layout.setSpacing(4)
+
+        # Brand kiri: pakai label lama agar nama app tetap konsisten.
+        self.topBrand = QWidget(self.topNavBar)
+        self.topBrand.setObjectName("topBrand")
+        self.topBrand.setMinimumWidth(126)
+        self.topBrand.setMaximumWidth(152)
+        brand_layout = QVBoxLayout(self.topBrand)
+        brand_layout.setContentsMargins(0, 0, 0, 0)
+        brand_layout.setSpacing(0)
+        for label in (self.appTitle, self.appSubtitle):
+            self.sidebarLayout.removeWidget(label)
+            label.setParent(self.topBrand)
+            brand_layout.addWidget(label)
+        top_layout.addWidget(self.topBrand)
+
+        # Dorong grup menu ke kanan agar tidak menempel ke brand SoundWave.
+        # Urutannya menjadi: Brand | ruang kosong | Menu compact | Switch | Add Song.
+        top_layout.addStretch(1)
+
+        # Area tombol kanan dibuat bergantian:
+        # default: Home/Search/Library/Favorite/Playlist; mode kedua: AI Chats/About/Recent/Quiz/Stats.
+        self.topNavButtons = QWidget(self.topNavBar)
+        self.topNavButtons.setObjectName("topNavButtons")
+        nav_layout = QHBoxLayout(self.topNavButtons)
+        nav_layout.setContentsMargins(0, 0, 0, 0)
+        # Jarak antarteks dibuat rapat tapi masih punya napas.
+        # Kunci utamanya: container nav tidak boleh ikut melebar memenuhi window,
+        # karena itu yang membuat Home/Search/Library/Favorite terlihat berjauhan.
+        # V7: spacing antar item tetap presisi, tapi container mengikuti lebar menu aktif.
+        # Ini menghilangkan ruang kosong besar antara Favorite dan tombol switch.
+        self._top_nav_item_spacing = 10
+        nav_layout.setSpacing(self._top_nav_item_spacing)
+        nav_layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
+        self.topNavButtons.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+        self.primary_nav_buttons = [
+            self.btnHome,
+            self.btnSearch,
+            self.btnLibrary,
+            self.btnFavorites,
+            self.btnPlaylist,
+        ]
+        self.secondary_nav_buttons = [
+            self.btnAIChat,
+            self.btnAbout,
+            self.btnRecent,
+            self.btnQuiz,
+            self.btnStats,
+        ]
+
+        compact_labels = {
+            self.btnHome: "Home",
+            self.btnSearch: "Search",
+            self.btnLibrary: "Library",
+            self.btnFavorites: "Favorite",
+            self.btnPlaylist: "Playlist",
+            self.btnAIChat: "AI Chats",
+            self.btnAbout: "About",
+            self.btnRecent: "Recent",
+            self.btnQuiz: "Quiz",
+            self.btnStats: "Stats",
+        }
+        compact_widths = {
+            self.btnHome: 44,
+            self.btnSearch: 52,
+            self.btnLibrary: 58,
+            self.btnFavorites: 64,
+            self.btnPlaylist: 62,
+            self.btnAIChat: 68,
+            self.btnAbout: 52,
+            self.btnRecent: 56,
+            self.btnQuiz: 38,
+            self.btnStats: 44,
+        }
+        self._top_nav_widths = {
+            False: sum(compact_widths[btn] for btn in self.primary_nav_buttons)
+                   + self._top_nav_item_spacing * (len(self.primary_nav_buttons) - 1),
+            True: sum(compact_widths[btn] for btn in self.secondary_nav_buttons)
+                  + self._top_nav_item_spacing * (len(self.secondary_nav_buttons) - 1),
+        }
+
+        for btn in self.primary_nav_buttons + self.secondary_nav_buttons:
+            self.sidebarLayout.removeWidget(btn)
+            btn.setParent(self.topNavButtons)
+            btn.setText(compact_labels[btn])
+            btn.setIcon(QIcon())
+            btn.setIconSize(QSize(0, 0))
+            btn.setMinimumHeight(34)
+            btn.setMinimumWidth(compact_widths[btn])
+            btn.setMaximumWidth(compact_widths[btn])
+            btn.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+            btn.setCursor(Qt.PointingHandCursor)
+            nav_layout.addWidget(btn)
+        top_layout.addWidget(self.topNavButtons, 0, Qt.AlignVCenter)
+
+        # Playlist sekarang masuk mode utama top bar, jadi tidak disembunyikan lagi.
+
+        # Tombol AI V2 tidak dihapus, hanya disembunyikan karena aksesnya lewat dropdown AI Chats.
+        self.sidebarLayout.removeWidget(self.btnAIChatV2)
+        self.btnAIChatV2.setVisible(False)
+        self.btnAIChatV2.setMaximumSize(0, 0)
+
+        # Tombol pengalih mode navigasi: modelnya seperti Add Song, tapi compact dan pakai icon About.
+        self.btnNavSwitch = QPushButton(self.topNavBar)
+        self.btnNavSwitch.setObjectName("btnNavSwitch")
+        self.btnNavSwitch.setText("")
+        self.btnNavSwitch.setToolTip("Show more navigation")
+        self.btnNavSwitch.setCheckable(True)
+        about_icon = _svg_icon(resource_path("icons", "svg", "info.svg"), "#C4B5FD", 18)
+        if not about_icon.isNull():
+            self.btnNavSwitch.setIcon(about_icon)
+            self.btnNavSwitch.setIconSize(QSize(18, 18))
+        self.btnNavSwitch.setFixedSize(38, 38)
+        self.btnNavSwitch.setCursor(Qt.PointingHandCursor)
+        self.btnNavSwitch.clicked.connect(self._toggle_nav_group)
+        top_layout.addWidget(self.btnNavSwitch)
+
+        # CTA kanan: Add Song tetap mudah ditemukan dan tetap glass-style.
+        self.sidebarLayout.removeWidget(self.btnAddSong)
+        self.btnAddSong.setParent(self.topNavBar)
+        self.btnAddSong.setText("Add Song")
+        groq_like_icon = _svg_icon(resource_path("icons", "svg", "zap.svg"), "#C4B5FD", 17)
+        if not groq_like_icon.isNull():
+            self.btnAddSong.setIcon(groq_like_icon)
+            self.btnAddSong.setIconSize(QSize(17, 17))
+        self.btnAddSong.setMinimumHeight(38)
+        self.btnAddSong.setMinimumWidth(108)
+        self.btnAddSong.setMaximumWidth(118)
+        self.btnAddSong.setCursor(Qt.PointingHandCursor)
+        top_layout.addWidget(self.btnAddSong)
+
+        # Sidebar lama dimatikan total agar tidak menyisakan kolom kosong di kiri.
+        self.sidebar.setVisible(False)
+        self.sidebar.setMinimumWidth(0)
+        self.sidebar.setMaximumWidth(0)
+
+        # Sisipkan navbar di baris paling atas layout utama.
+        root.insertWidget(0, self.topNavBar)
+        self._setup_ai_chat_menu()
+        self._nav_secondary_visible = False
+        self._apply_nav_group(False)
+        logger.info("Compact top navigation V7 initialized with dynamic-width nav groups near switch button")
+
+    def _toggle_nav_group(self):
+        """Ganti tampilan navbar antara menu utama dan menu lanjutan."""
+        self._apply_nav_group(not getattr(self, "_nav_secondary_visible", False))
+
+    def _apply_nav_group(self, show_secondary: bool):
+        """Tampilkan grup nav yang sesuai tanpa mengubah halaman aktif."""
+        self._nav_secondary_visible = show_secondary
+        if hasattr(self, "btnNavSwitch"):
+            self.btnNavSwitch.setChecked(show_secondary)
+            self.btnNavSwitch.setToolTip("Show main navigation" if show_secondary else "Show more navigation")
+
+        for btn in getattr(self, "primary_nav_buttons", []):
+            btn.setVisible(not show_secondary)
+        for btn in getattr(self, "secondary_nav_buttons", []):
+            btn.setVisible(show_secondary)
+
+        # V7: container nav dibuat seukuran menu aktif agar menu utama tidak jauh dari tombol switch.
+        if hasattr(self, "topNavButtons") and hasattr(self, "_top_nav_widths"):
+            target_width = self._top_nav_widths.get(show_secondary, 248)
+            self.topNavButtons.setFixedWidth(target_width)
+
+    def _setup_ai_chat_menu(self):
+        """Menu pilihan model untuk tombol AI Chats."""
+        self.ai_chat_menu = QMenu(self.btnAIChat)
+        self.ai_chat_menu.setObjectName("aiChatMenu")
+        gpt_action = self.ai_chat_menu.addAction("GPT 4o Mini")
+        groq_action = self.ai_chat_menu.addAction("Groq AI")
+        gpt_action.triggered.connect(lambda checked=False: self._go_page(C.PAGE_AI_CHAT))
+        groq_action.triggered.connect(lambda checked=False: self._go_page(C.PAGE_AI_CHAT_V2))
+
+    def _show_ai_chat_menu(self):
+        """Tampilkan pilihan AI dari satu tombol top navigation."""
+        if hasattr(self, "ai_chat_menu"):
+            pos = self.btnAIChat.mapToGlobal(self.btnAIChat.rect().bottomLeft())
+            self.ai_chat_menu.exec_(pos)
+        else:
+            self._go_page(C.PAGE_AI_CHAT)
+
+    def _top_nav_button_style(self, active: bool) -> str:
+        """Text-only style tanpa background ungu saat active, hover, maupun pressed."""
+        if active:
+            return """
+                QPushButton {
+                    background-color: transparent;
+                    color: #FFFFFF;
+                    border: none;
+                    border-bottom: 2px solid #FFFFFF;
+                    border-radius: 0px;
+                    padding: 6px 0px 8px 0px;
+                    font-size: 12px;
+                    font-weight: 800;
+                    font-family: "Segoe UI";
+                    text-align: center;
+                }
+                QPushButton:hover {
+                    background-color: transparent;
+                    color: #FFFFFF;
+                    border-bottom: 2px solid rgba(255, 255, 255, 180);
+                }
+                QPushButton:pressed {
+                    background-color: transparent;
+                    color: #FFFFFF;
+                    border-bottom: 2px solid rgba(255, 255, 255, 180);
+                }
+            """
+        return """
+            QPushButton {
+                background-color: transparent;
+                color: #A6A6B7;
+                border: none;
+                border-bottom: 2px solid transparent;
+                border-radius: 0px;
+                padding: 6px 0px 8px 0px;
+                font-size: 12px;
+                font-weight: 650;
+                font-family: "Segoe UI";
+                text-align: center;
+            }
+            QPushButton:hover {
+                background-color: transparent;
+                color: #FFFFFF;
+                border-bottom: 2px solid rgba(255, 255, 255, 120);
+            }
+            QPushButton:pressed {
+                background-color: transparent;
+                color: #FFFFFF;
+                border-bottom: 2px solid rgba(255, 255, 255, 120);
+            }
+        """
 
     # =========================================================================
     # ABOUT PAGE & ANIMATIONS
@@ -380,8 +641,7 @@ class MusicPlayer(QMainWindow):
         self.btnSearch.clicked.connect(lambda: self._go_page(C.PAGE_SEARCH))
         self.btnLibrary.clicked.connect(lambda: self._go_page(C.PAGE_LIBRARY))
         self.btnFavorites.clicked.connect(lambda: self._go_page(C.PAGE_FAVORITES))
-        self.btnAIChat.clicked.connect(lambda: self._go_page(C.PAGE_AI_CHAT))
-        self.btnAIChatV2.clicked.connect(lambda: self._go_page(C.PAGE_AI_CHAT_V2))
+        self.btnAIChat.clicked.connect(self._show_ai_chat_menu)
         self.btnPlaylist.clicked.connect(lambda: self._go_page(C.PAGE_PLAYLIST))
         self.btnRecent.clicked.connect(self._go_recent)
         self.btnQuiz.clicked.connect(self._go_quiz)
@@ -411,27 +671,35 @@ class MusicPlayer(QMainWindow):
     # =========================================================================
     def _go_page(self, page_index):
         self.stackedPages.setCurrentIndex(page_index)
-        nav_buttons = [
-            self.btnHome, self.btnSearch, self.btnLibrary, self.btnFavorites,
-            self.btnAIChat, self.btnPlaylist, self.btnRecent, self.btnQuiz,
-            self.btnStats, self.btnAbout, self.btnAIChatV2
+
+        nav_specs = [
+            (self.btnHome,      [C.PAGE_HOME],                         "home.svg"),
+            (self.btnSearch,    [C.PAGE_SEARCH],                       "search.svg"),
+            (self.btnLibrary,   [C.PAGE_LIBRARY],                      "library.svg"),
+            (self.btnFavorites, [C.PAGE_FAVORITES],                    "heart.svg"),
+            (self.btnAIChat,    [C.PAGE_AI_CHAT, C.PAGE_AI_CHAT_V2],    "bot.svg"),
+            (self.btnPlaylist,  [C.PAGE_PLAYLIST],                     "playlist.svg"),
+            (self.btnRecent,    [C.PAGE_RECENT],                       "clock.svg"),
+            (self.btnQuiz,      [C.PAGE_QUIZ],                         "target.svg"),
+            (self.btnStats,     [C.PAGE_STATS],                        "chart.svg"),
+            (self.btnAbout,     [C.PAGE_ABOUT],                        "info.svg"),
         ]
-        svg_files = [
-            "home.svg", "search.svg", "library.svg", "heart.svg",
-            "bot.svg", "playlist.svg", "clock.svg", "target.svg",
-            "chart.svg", "info.svg", "zap.svg",
-        ]
-        base = PROJECT_ROOT
-        for i, btn in enumerate(nav_buttons):
-            is_active = (i == page_index)
-            btn.setStyleSheet(C.NAV_ACTIVE if is_active else C.NAV_INACTIVE)
-            if i < len(svg_files):
-                color = "#A78BFA" if is_active else "#6B7280"
-                icon  = _svg_icon(resource_path("icons", "svg", svg_files[i]), color, 18)
-                if not icon.isNull():
-                    btn.setIcon(icon)
-                    from PyQt5.QtCore import QSize
-                    btn.setIconSize(QSize(18, 18))
+
+        for btn, pages, svg_file in nav_specs:
+            is_active = page_index in pages
+            btn.setStyleSheet(self._top_nav_button_style(is_active))
+            # Navbar dibuat text-only; icon dikosongkan agar jarak tetap presisi.
+            btn.setIcon(QIcon())
+            btn.setIconSize(QSize(0, 0))
+
+        if hasattr(self, "secondary_nav_buttons"):
+            secondary_pages = {C.PAGE_AI_CHAT, C.PAGE_AI_CHAT_V2, C.PAGE_ABOUT, C.PAGE_RECENT, C.PAGE_QUIZ, C.PAGE_STATS}
+            primary_pages = {C.PAGE_HOME, C.PAGE_SEARCH, C.PAGE_LIBRARY, C.PAGE_FAVORITES, C.PAGE_PLAYLIST}
+            if page_index in secondary_pages:
+                self._apply_nav_group(True)
+            elif page_index in primary_pages:
+                self._apply_nav_group(False)
+
         if page_index == C.PAGE_FAVORITES:
             self._refresh_fav_empty()
         logger.nav_changed(page_index)
@@ -797,11 +1065,11 @@ class MusicPlayer(QMainWindow):
     def _update_queue_badge(self):
         count = len(self.songs)
         if hasattr(self, "lblQueueSub"):
-            self.lblQueueSub.setText(f"Queue  ·  {count}" if count > 0 else "Queue")
+            self.lblQueueSub.setText(f"Song  ·  {count}" if count > 0 else "Queue")
 
     def _update_fav_badge(self):
         count = len(self.favorites)
-        label = f"❤️   Favorites  {count}" if count > 0 else "❤️   Favorites"
+        label = f"Favorites · {count}" if count > 0 else "Favorites"
         self.btnFavorites.setText(label)
 
     # =========================================================================

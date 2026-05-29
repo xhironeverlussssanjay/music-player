@@ -339,20 +339,73 @@ QListWidget#queueList::item:selected {
     font-weight: 600;
 }
 
+/* ===== SAME EXACT BUTTON STYLE: Refresh Lyrics & Clear Queue ===== */
+
+QPushButton#btnRefreshLyrics,
 QPushButton#btnClearQueue {
-    background-color: transparent;
-    color: #6B7280;
-    border-radius: 3px solid #2D2D44;
-    border-radius: 18px;
-    font-size: 11px;
-    padding: 6px 14px;
+    background: transparent;
+    color: #A1A1AA;
+    border: 1px solid rgba(82, 82, 91, 0.36);
+    border-radius: 10px;
+
+    font-size: 10px;
+    font-weight: 650;
+    font-family: "Segoe UI";
+
+    padding: 4px 10px;
+
+    min-width: 96px;
+    max-width: 96px;
+    min-height: 26px;
+    max-height: 26px;
+
+    text-align: center;
 }
 
+QPushButton#btnRefreshLyrics:hover,
 QPushButton#btnClearQueue:hover {
-    color: #F87171;
-    border-radius: 1px solid #F87171;
-    border-radius: 19px;
-    background-color: #20151B;
+    color: #E9D5FF;
+    background: rgba(139, 92, 246, 0.06);
+    border: 1px solid rgba(167, 139, 250, 0.42);
+    border-radius: 10px;
+
+    min-width: 96px;
+    max-width: 96px;
+    min-height: 26px;
+    max-height: 26px;
+    padding: 4px 10px;
+}
+
+QPushButton#btnRefreshLyrics:pressed,
+QPushButton#btnClearQueue:pressed {
+    color: #C4B5FD;
+    background: rgba(139, 92, 246, 0.10);
+    border: 1px solid rgba(167, 139, 250, 0.58);
+    border-radius: 10px;
+
+    min-width: 96px;
+    max-width: 96px;
+    min-height: 26px;
+    max-height: 26px;
+
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+QPushButton#btnRefreshLyrics:disabled,
+QPushButton#btnClearQueue:disabled {
+    color: #52525B;
+    background: transparent;
+    border: 1px solid rgba(82, 82, 91, 0.24);
+    border-radius: 10px;
+
+    min-width: 96px;
+    max-width: 96px;
+    min-height: 26px;
+    max-height: 26px;
+    padding: 4px 10px;
 }
 
 QLabel#lblSearchTitle, QLabel#lblLibraryTitle, QLabel#lblFavTitle {
@@ -592,4 +645,417 @@ QWidget#chatInputBar {
 QFrame#modernInputPill {
     background-color: rgba(11, 12, 22, 244);
     border: 1.5px solid rgba(214, 206, 255, 54);
+}
+
+/* ==========================================================
+   TOP NAVIGATION PRO PATCH
+   Sidebar lama disembunyikan dari Python dan tombolnya dipindah ke top bar.
+   ========================================================== */
+QFrame#topNavBar {
+    background-color: #0D0D16;
+    border-bottom: 1px solid #1A1A28;
+}
+
+QWidget#topBrand, QWidget#topNavButtons {
+    background-color: transparent;
+}
+
+QFrame#topNavBar QLabel#appTitle {
+    color: #F4F0FF;
+    font-size: 18px;
+    font-weight: 800;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QLabel#appSubtitle {
+    color: #7C6BA8;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong {
+    background-color: #A78BFA;
+    color: #0A0A0F;
+    border: none;
+    border-radius: 18px;
+    padding: 10px 14px;
+    font-weight: 800;
+    font-size: 12px;
+    font-family: "Segoe UI";
+    text-align: center;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover {
+    background-color: #C4B5FD;
+}
+
+QMenu#aiChatMenu {
+    background-color: #10101A;
+    color: #EDE9FE;
+    border: 1px solid #342C4E;
+    border-radius: 14px;
+    padding: 8px;
+    font-family: "Segoe UI";
+    font-size: 12px;
+}
+
+QMenu#aiChatMenu::item {
+    padding: 9px 28px 9px 14px;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+QMenu#aiChatMenu::item:selected {
+    background-color: #2A1A4A;
+    color: #FFFFFF;
+}
+
+
+/* ==========================================================
+   TOP NAVIGATION COMPACT V2 — text-only, no active purple box
+   ========================================================== */
+QFrame#topNavBar {
+    background-color: rgba(8, 8, 15, 238);
+    border-bottom: 1px solid rgba(167, 139, 250, 35);
+}
+
+QWidget#topBrand, QWidget#topNavButtons {
+    background-color: transparent;
+}
+
+QFrame#topNavBar QLabel#appTitle {
+    color: #F6F1FF;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QLabel#appSubtitle {
+    color: #7E709E;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnPlaylist,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 34px;
+    max-height: 34px;
+    margin: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong {
+    background-color: rgba(167, 139, 250, 38);
+    color: #F8F5FF;
+    border: 1px solid rgba(196, 181, 253, 90);
+    border-radius: 17px;
+    padding: 8px 12px;
+    font-weight: 800;
+    font-size: 12px;
+    font-family: "Segoe UI";
+    text-align: center;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover {
+    background-color: rgba(167, 139, 250, 70);
+    border: 1px solid rgba(221, 214, 254, 145);
+    color: #FFFFFF;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:pressed {
+    background-color: rgba(124, 58, 237, 130);
+    border: 1px solid #A78BFA;
+    color: #FFFFFF;
+}
+
+
+/* ==========================================================
+   TOP NAVIGATION V3 — switchable compact menu, no purple active fill
+   ========================================================== */
+QFrame#topNavBar {
+    background-color: rgba(8, 8, 15, 238);
+    border-bottom: 1px solid rgba(255, 255, 255, 28);
+}
+
+QWidget#topBrand,
+QWidget#topNavButtons {
+    background-color: transparent;
+}
+
+QFrame#topNavBar QLabel#appTitle {
+    color: #F6F1FF;
+    font-size: 15px;
+    font-weight: 800;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QLabel#appSubtitle {
+    color: #FFFFFF;
+    font-size: 8px;
+    font-weight: 650;
+    letter-spacing: 1px;
+    font-family: "Segoe UI";
+    padding: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 34px;
+    max-height: 34px;
+    margin: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong,
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    background-color: rgba(167, 139, 250, 18);
+    color: #F5F1FF;
+    border: 1px solid rgba(167, 139, 250, 92);
+    border-radius: 18px;
+    font-weight: 800;
+    font-size: 12px;
+    font-family: "Segoe UI";
+    text-align: center;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong {
+    padding: 8px 12px;
+}
+
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    padding: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover,
+QFrame#topNavBar QPushButton#btnNavSwitch:hover {
+    background-color: rgba(167, 139, 250, 30);
+    border: 1px solid rgba(196, 181, 253, 132);
+    color: #FFFFFF;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:checked {
+    background-color: rgba(167, 139, 250, 42);
+    border: 1px solid rgba(196, 181, 253, 145);
+    color: #FFFFFF;
+}
+
+QMenu#aiChatMenu {
+    background-color: #101018;
+    color: #F4F4F8;
+    border: 1px solid rgba(255, 255, 255, 55);
+    border-radius: 14px;
+    padding: 8px;
+    font-family: "Segoe UI";
+    font-size: 12px;
+}
+
+QMenu#aiChatMenu::item {
+    padding: 9px 28px 9px 14px;
+    border-radius: 10px;
+    background-color: transparent;
+}
+
+QMenu#aiChatMenu::item:selected {
+    background-color: rgba(255, 255, 255, 24);
+    color: #FFFFFF;
+}
+
+
+/* ==========================================================
+   TOP NAVIGATION V4 — tighter spacing + thin purple glass buttons
+   ========================================================== */
+QFrame#topNavBar {
+    min-height: 56px;
+    max-height: 62px;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 33px;
+    max-height: 33px;
+    margin: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong,
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    background-color: rgba(167, 139, 250, 18);
+    color: #F5F1FF;
+    border: 1px solid rgba(167, 139, 250, 92);
+    border-radius: 18px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover,
+QFrame#topNavBar QPushButton#btnNavSwitch:hover {
+    background-color: rgba(167, 139, 250, 30);
+    border: 1px solid rgba(196, 181, 253, 132);
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:checked {
+    background-color: rgba(167, 139, 250, 42);
+    border: 1px solid rgba(196, 181, 253, 145);
+}
+
+
+/* ==========================================================
+   TOP NAVIGATION V5 — fixed close-spacing nav group
+   Fix: menu tidak lagi melebar mengikuti window, jadi jarak teks rapat dan presisi.
+   ========================================================== */
+QFrame#topNavBar {
+    min-height: 56px;
+    max-height: 60px;
+}
+
+QWidget#topNavButtons {
+    min-width: 340px;
+    max-width: 360px;
+    background-color: transparent;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 33px;
+    max-height: 33px;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong,
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    background-color: rgba(167, 139, 250, 18);
+    border: 1px solid rgba(167, 139, 250, 96);
+    color: #F7F2FF;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover,
+QFrame#topNavBar QPushButton#btnNavSwitch:hover {
+    background-color: rgba(167, 139, 250, 32);
+    border: 1px solid rgba(196, 181, 253, 138);
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:checked {
+    background-color: rgba(167, 139, 250, 44);
+    border: 1px solid rgba(196, 181, 253, 150);
+}
+
+
+/* ==========================================================
+   TOP NAVIGATION V7 — menu utama dirapatkan ke tombol switch
+   ========================================================== */
+QWidget#topNavButtons {
+    min-width: 248px;
+    max-width: 300px;
+    background-color: transparent;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 33px;
+    max-height: 33px;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong,
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    background-color: rgba(167, 139, 250, 18);
+    border: 1px solid rgba(167, 139, 250, 104);
+    color: #F7F2FF;
+}
+
+/* ==========================================================
+   FINAL CLEAN PATCH — Playlist in primary top nav + calmer playlist buttons
+   ========================================================== */
+QWidget#topNavButtons {
+    min-width: 320px;
+    max-width: 340px;
+    background-color: transparent;
+}
+
+QFrame#topNavBar QPushButton#btnHome,
+QFrame#topNavBar QPushButton#btnSearch,
+QFrame#topNavBar QPushButton#btnLibrary,
+QFrame#topNavBar QPushButton#btnFavorites,
+QFrame#topNavBar QPushButton#btnPlaylist,
+QFrame#topNavBar QPushButton#btnAIChat,
+QFrame#topNavBar QPushButton#btnRecent,
+QFrame#topNavBar QPushButton#btnQuiz,
+QFrame#topNavBar QPushButton#btnStats,
+QFrame#topNavBar QPushButton#btnAbout {
+    min-height: 33px;
+    max-height: 33px;
+    margin: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong,
+QFrame#topNavBar QPushButton#btnNavSwitch {
+    background-color: rgba(255, 255, 255, 10);
+    color: #F7F2FF;
+    border: 1px solid rgba(255, 255, 255, 32);
+    border-radius: 18px;
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:hover,
+QFrame#topNavBar QPushButton#btnNavSwitch:hover {
+    background-color: rgba(167, 139, 250, 24);
+    border: 1px solid rgba(196, 181, 253, 92);
+}
+
+QFrame#topNavBar QPushButton#btnAddSong:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:pressed,
+QFrame#topNavBar QPushButton#btnNavSwitch:checked {
+    background-color: rgba(167, 139, 250, 38);
+    border: 1px solid rgba(196, 181, 253, 125);
 }

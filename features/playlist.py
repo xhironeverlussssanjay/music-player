@@ -117,38 +117,42 @@ class PlaylistWidget(QWidget):
     QPushButton#btnPlCreate, QPushButton#btnPlLoad,
     QPushButton#btnPlDelete, QPushButton#btnPlRemoveSong,
     QPushButton#btnPlRename {
-        min-height: 36px;
-        max-height: 36px;
-        min-width: 100px;
+        min-height: 34px;
+        max-height: 34px;
+        min-width: 112px;
+        max-width: 112px;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: 700;
         font-family: 'Segoe UI';
-        border-radius: 10px;
-        padding: 0px 14px;
+        border-radius: 12px;
+        padding: 0px;
         text-align: center;
+        background-color: rgba(255, 255, 255, 9);
+        color: #D9DDE8;
+        border: 1px solid rgba(255, 255, 255, 24);
     }
-    QPushButton#btnPlCreate, QPushButton#btnPlLoad {
-        background-color: #A78BFA; color: #0A0A0F;
-        border: none;
-    }
-    QPushButton#btnPlCreate:hover, QPushButton#btnPlLoad:hover {
-        background-color: #C4B5FD;
-    }
-    QPushButton#btnPlDelete, QPushButton#btnPlRemoveSong {
-        background: transparent; color: #9CA3AF;
-        border: 1px solid #2D2D44;
+    QPushButton#btnPlCreate:hover, QPushButton#btnPlLoad:hover,
+    QPushButton#btnPlRename:hover {
+        background-color: rgba(167, 139, 250, 24);
+        color: #FFFFFF;
+        border: 1px solid rgba(196, 181, 253, 95);
     }
     QPushButton#btnPlDelete:hover, QPushButton#btnPlRemoveSong:hover {
-        color: #E2E8F0;
-        border-color: #6B7280;
-        background-color: rgba(156,163,175,0.08);
+        color: #FCA5A5;
+        background-color: rgba(248, 113, 113, 14);
+        border: 1px solid rgba(248, 113, 113, 82);
     }
-    QPushButton#btnPlRename {
-        background: transparent; color: #9CA3AF;
-        border: 1px solid #2D2D44;
+    QPushButton#btnPlCreate:pressed, QPushButton#btnPlLoad:pressed,
+    QPushButton#btnPlRename:pressed, QPushButton#btnPlDelete:pressed,
+    QPushButton#btnPlRemoveSong:pressed {
+        background-color: rgba(167, 139, 250, 34);
+        border: 1px solid rgba(196, 181, 253, 115);
+        color: #FFFFFF;
     }
-    QPushButton#btnPlRename:hover {
-        color: #A78BFA; border-color: #A78BFA; background-color: #1A1528;
+    QPushButton#btnPlCreate:focus, QPushButton#btnPlLoad:focus,
+    QPushButton#btnPlDelete:focus, QPushButton#btnPlRemoveSong:focus,
+    QPushButton#btnPlRename:focus {
+        outline: none;
     }
     QScrollBar:vertical { background: transparent; width: 3px; }
     QScrollBar::handle:vertical { background: #2D2D44; border-radius: 2px; min-height: 20px; }
@@ -171,65 +175,89 @@ class PlaylistWidget(QWidget):
         title = QLabel("🎼  Playlist Manager")
         title.setObjectName("playlistTitle")
         root.addWidget(title)
+
         sub = QLabel("Buat dan kelola playlist kamu")
         sub.setObjectName("playlistSub")
         root.addWidget(sub)
 
         content = QHBoxLayout()
-        content.setSpacing(16)
+        content.setContentsMargins(0, 0, 0, 0)
+        content.setSpacing(14)
 
         # LEFT — daftar playlist
         left = QVBoxLayout()
+        left.setContentsMargins(0, 0, 0, 0)
         left.setSpacing(8)
+
         lbl_pl = QLabel("Playlist")
         lbl_pl.setStyleSheet("color:#9CA3AF;font-size:11px;font-weight:600;letter-spacing:1px;")
         left.addWidget(lbl_pl)
+
         self.playlist_list = QListWidget()
         self.playlist_list.setObjectName("playlistList")
         self.playlist_list.currentRowChanged.connect(self._on_pl_select)
         left.addWidget(self.playlist_list)
 
-        btn_row = QHBoxLayout()
-        btn_row.setSpacing(6)
-        self.btn_create = QPushButton("＋ New")
-        self.btn_create.setObjectName("btnPlCreate")
-        self.btn_create.clicked.connect(self._create_playlist)
-        self.btn_rename = QPushButton("✎ Rename")
-        self.btn_rename.setObjectName("btnPlRename")
-        self.btn_rename.clicked.connect(self._rename_playlist)
-        self.btn_delete = QPushButton("✕ Delete")
-        self.btn_delete.setObjectName("btnPlDelete")
-        self.btn_delete.clicked.connect(self._delete_playlist)
-        btn_row.addWidget(self.btn_create)
-        btn_row.addWidget(self.btn_rename)
-        btn_row.addWidget(self.btn_delete)
-        left.addLayout(btn_row)
-
         # RIGHT — lagu dalam playlist
         right = QVBoxLayout()
+        right.setContentsMargins(0, 0, 0, 0)
         right.setSpacing(8)
+
         lbl_songs = QLabel("Lagu dalam Playlist")
         lbl_songs.setStyleSheet("color:#9CA3AF;font-size:11px;font-weight:600;letter-spacing:1px;")
         right.addWidget(lbl_songs)
+
         self.song_list = QListWidget()
         self.song_list.setObjectName("songInPlaylist")
         right.addWidget(self.song_list)
 
-        song_btn_row = QHBoxLayout()
-        song_btn_row.setSpacing(6)
-        self.btn_load = QPushButton("▶ Load & Play")
-        self.btn_load.setObjectName("btnPlLoad")
-        self.btn_load.clicked.connect(self._load_playlist)
-        self.btn_remove_song = QPushButton("✕ Remove Song")
-        self.btn_remove_song.setObjectName("btnPlRemoveSong")
-        self.btn_remove_song.clicked.connect(self._remove_song)
-        song_btn_row.addWidget(self.btn_load)
-        song_btn_row.addWidget(self.btn_remove_song)
-        right.addLayout(song_btn_row)
-
         content.addLayout(left, 1)
         content.addLayout(right, 2)
-        root.addLayout(content)
+        root.addLayout(content, 1)
+
+        # Unified action bar — semua tombol dibuat satu baris agar jaraknya sama dan dempet.
+        action_btn_w = 112
+        action_btn_h = 34
+        action_btn_gap = 4
+
+        action_bar = QHBoxLayout()
+        action_bar.setContentsMargins(0, 0, 0, 0)
+        action_bar.setSpacing(action_btn_gap)
+        action_bar.addStretch(1)
+
+        self.btn_create = QPushButton("Add")
+        self.btn_create.setObjectName("btnPlCreate")
+        self.btn_create.clicked.connect(self._create_playlist)
+
+        self.btn_rename = QPushButton("Rename")
+        self.btn_rename.setObjectName("btnPlRename")
+        self.btn_rename.clicked.connect(self._rename_playlist)
+
+        self.btn_delete = QPushButton("Delete")
+        self.btn_delete.setObjectName("btnPlDelete")
+        self.btn_delete.clicked.connect(self._delete_playlist)
+
+        self.btn_load = QPushButton("Load Play")
+        self.btn_load.setObjectName("btnPlLoad")
+        self.btn_load.clicked.connect(self._load_playlist)
+
+        self.btn_remove_song = QPushButton("Delete Song")
+        self.btn_remove_song.setObjectName("btnPlRemoveSong")
+        self.btn_remove_song.clicked.connect(self._remove_song)
+
+        for btn in (
+            self.btn_create,
+            self.btn_rename,
+            self.btn_delete,
+            self.btn_load,
+            self.btn_remove_song,
+        ):
+            btn.setFixedSize(action_btn_w, action_btn_h)
+            btn.setCursor(Qt.PointingHandCursor)
+            action_bar.addWidget(btn)
+
+        action_bar.addStretch(1)
+        root.addLayout(action_bar, 0)
 
     def _refresh_list(self):
         self.playlist_list.clear()
