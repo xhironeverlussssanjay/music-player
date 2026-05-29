@@ -31,3 +31,5 @@ Thumbs.db
 history.json
 stats.json
 playlists.json
+
+# Scripts folder akan di-push (berguna untuk user lain)
